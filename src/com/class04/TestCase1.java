@@ -18,10 +18,10 @@ public class TestCase1 extends CommonMethods{
 //	Quit browser
 	public static final String JIRA_URL="http://jiravm.centralus.cloudapp.azure.com:8081/index.html";
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		CommonMethods.setUp("chrome", JIRA_URL);
-		
+		driver.manage().window().maximize();
 		driver.findElement(By.xpath("//*[@id=\"treemenu\"]/li/ul/li[1]/a")).click();
 		driver.findElement(By.linkText("Radio Buttons Demo")).click();
 		
@@ -29,12 +29,22 @@ public class TestCase1 extends CommonMethods{
 		if (!male.isSelected()) {
 			male.click();
 			if(male.isSelected()) {
-				System.out.println("Selected after clicking");
+				System.out.println("Correct option is selected");
 			}else {
 				System.err.println("Unable to click male option");
 			}
 		}
-		
+		WebElement female = driver.findElement(By.xpath("//input[@value='Female'and@name='gender']"));
+		if (!female.isSelected()) {
+			female.click();
+			if	(female.isSelected()) {
+				System.out.println("Female option is selected");
+			}else {
+				System.err.println("Unable to flick female option");
+			}
+			Thread.sleep(2000);
+			driver.close();
+		}
 		
 		
 		

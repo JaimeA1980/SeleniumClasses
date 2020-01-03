@@ -22,6 +22,8 @@ public class CommonMethods {
 			System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");
 			driver = new FirefoxDriver();
 			driver.get(url);
+		}else {
+			System.err.println("Browser not supported");
 		}
 		
 		//return driver;
