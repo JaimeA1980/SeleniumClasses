@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="C:/Users/huaso/Documents/JarFiles/Selenium/libs/okhttp-3.11.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/huaso/Documents/JarFiles/Selenium/libs/okio-1.14.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/huaso/Downloads/selenium-java-3.141.59.zip"/>
+	<classpathentry kind="lib" path="C:/Users/huaso/Documents/JarFiles/Common IO/commons-io-2.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
