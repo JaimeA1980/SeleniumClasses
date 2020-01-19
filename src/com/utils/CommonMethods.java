@@ -3,6 +3,7 @@ package com.utils;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.WebDriver;
@@ -14,118 +15,162 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class CommonMethods {
 	public static WebDriver driver;
+
 	/**
 	 * Use this method in need of opening browser and target url
+	 * 
 	 * @param browser, the desired browser
-	 * @param url, desired url
+	 * @param url,     desired url
 	 */
 	public static void setUp(String browser, String url) {
-		
-		if(browser.equalsIgnoreCase("chrome")) {
+
+		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-			driver=new ChromeDriver();
-			//driver.get(url);
-			
-		}else if(browser.equalsIgnoreCase("firefox")) {
+			driver = new ChromeDriver();
+			// driver.get(url);
+
+		} else if (browser.equalsIgnoreCase("firefox")) {
 			System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");
 			driver = new FirefoxDriver();
-			//driver.get(url);
-		}else {
+			// driver.get(url);
+		} else {
 			System.err.println("Browser not supported");
 		}
 		driver.manage().window().maximize();
-		//driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get(url); //moved down here after adding these wait methods
-		
-		
+		// driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get(url); // moved down here after adding these wait methods
+
 	}
+
 	/**
 	 * This method will accept the alert
 	 * 
-	 * @throws NoAlertPresentException if alert is not present 
+	 * @throws NoAlertPresentException if alert is not present
 	 */
 	public static void acceptAlert() {
-		
+
 		try {
-			Alert alert=driver.switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			alert.accept();
-		}catch (NoAlertPresentException e) {
+		} catch (NoAlertPresentException e) {
 			System.out.println("Alert is not present");
 		}
 	}
-	
+
 	/**
 	 * This methods will dismiss the alert
 	 * 
-	 * @throws NoAlertPresentException if alert is not present 
+	 * @throws NoAlertPresentException if alert is not present
 	 */
 	public static void dismissAlert() {
-		
+
 		try {
-			Alert alert=driver.switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			alert.dismiss();
-		}catch(NoAlertPresentException e) {
+		} catch (NoAlertPresentException e) {
 			System.out.println("Alert is not prresent");
 		}
 	}
-	
+
 	/**
 	 * This method will get a text from the alert
 	 * 
 	 * @return text of the alert
 	 * @throws NoAlertPresentException if alert is not present
 	 */
-	
+
 	public static String getAlertText() {
-		
+
 		try {
-			Alert alert=driver.switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			return alert.getText();
-		}catch(NoAlertPresentException e) {
+		} catch (NoAlertPresentException e) {
 			System.out.println("Alert is not present");
 			return null;
 		}
 	}
-	
+
 	/**
 	 * This method will switch to the frame
+	 * 
 	 * @param nameOrId
 	 */
 	public static void switchToFrame(String nameOrId) {
-		
+
 		try {
 			driver.switchTo().frame(nameOrId);
-			
-		}catch(NoSuchFrameException e) {
+
+		} catch (NoSuchFrameException e) {
 			System.out.println("Frame is not present");
 		}
 	}
+
 	/**
 	 * This method will switch to the frame
+	 * 
 	 * @param element
 	 */
 	public static void switchToFrame(WebElement element) {
-		
+
 		try {
 			driver.switchTo().frame(element);
-		}catch (NoSuchFrameException e) {
+		} catch (NoSuchFrameException e) {
+			System.out.println("Frame is not present");
+		}
+	}
+
+	/**
+	 * This method will switch to the frame
+	 * 
+	 * @param index
+	 */
+	public static void switchToFrame(int index) {
+
+		try {
+			driver.switchTo().frame(index);
+		} catch (NoSuchFrameException e) {
 			System.out.println("Frame is not present");
 		}
 	}
 	/**
-	 * This method will switch to the frame
-	 * @param index
+	 * This method will click on the element using JSexecutor
+	 * @param element
 	 */
-	public static void switchToFrame(int index) {
 		
-		try {
-			driver.switchTo().frame(index);
-		}catch (NoSuchFrameException e) {
-			System.out.println("Frame is not present");
-		}
+	public static void jsClick(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
 	}
 	
+	/**This method will scroll page until specified element is found
+	 * 
+	 * @param element
+	 */
+
+	public static void scrollInto(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView(true)", element);
+	}
+	/**
+	 * This method will scroll page down
+	 * @param pixel
+	 */
+	
+	public static void scrollDown(int pixel) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,"+pixel+")");
+	}
+	/**
+	 * This method will scroll page up
+	 * @param pixel
+	 */
+	
+	public static void scrollUp(int pixel) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,-"+pixel+")");
+	}
+
 //	public static WebDriver setUp(String browser){
 //		
 //		if(browser.equalsIgnoreCase("chrome")) {
